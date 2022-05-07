@@ -1,6 +1,13 @@
+const generatePage = require('./src/generatePage.js');
+
+const Manager = require('./lib/Manager');
+const Engineer = require('./lib/Engineer');
+const Intern = require('./lib/Intern');
+
 const fs = require('fs');
 const inquirer = require('inquirer');
-// const generatePage = require('./src/page-template.js');
+
+const teamData = [];
 
 const promptUser = () => {
    return inquirer.prompt([
@@ -56,15 +63,18 @@ const promptUser = () => {
             }
          }
       }
-   ]);
+   ])
+      .then(managerInfo => {
+         const { name, id, email, officeNumber } = managerInfo;
+         const manager = new Manager(name, id, email, officeNumber);
+
+         teamData.push(manager);
+         console.log(manager);
+      })
 };
 
-const promptTeam = teamData => {
-
-   // if there is no 'team' array property, create one
-   if (!teamData.teams) {
-      teamData.teams = [];
-   }
+const promptTeam = () => {
+   
    return inquirer.prompt([
       {
          type: 'list',
@@ -72,7 +82,7 @@ const promptTeam = teamData => {
          message: 'What would you like to do next?',
          choices: ['Add Engineer', 'Add Intern', 'Quit Application']
       },
-      
+
       {
          type: 'input',
          name: 'name',
@@ -100,7 +110,7 @@ const promptTeam = teamData => {
                return false;
             }
          }
-      } ,
+      },
       {
          type: 'input',
          name: 'email',
@@ -121,7 +131,7 @@ const promptTeam = teamData => {
          message: "Please enter the engineer's GitHub username.",
          when: (input) => input.teamMember === 'Add Engineer',
          validate: usernameInput => {
-            if(usernameInput) {
+            if (usernameInput) {
                return true;
             } else {
                console.log('Please enter the username.')
@@ -156,19 +166,62 @@ const promptTeam = teamData => {
          default: false
       }
    ])
-   .then(teamArray => {
-      teamData.teams.push(teamArray);
-      if (teamArray.addMember) {
+
+   .then(employeeInfo => {
+
+      let { name, id, email, role, github, school, addMember } = employeeInfo;
+      let employee;
+
+      if (role === 'Add Engineer') {
+         employee = new Engineer (name, id, email, github);
+         console.log(employee);
+
+      } else {
+         employee = new Intern (name, id, email, school);
+         console.log(employee);
+      }
+
+      teamData.push(employee);
+      console.log(teamData);
+
+      if (addMember) {
          return promptTeam(teamData);
       } else {
          return teamData;
       }
+
    });
-}
+   
+};
+
+const writeFile = data => {
+   
+   fs.writeFile('./dist/index.html', data, err => {
+      
+      if (err) {
+         console.log(err);
+         
+         return;
+
+      } else {
+         console.log('team profile has been created!')
+      }
+   });
+};
 
 promptUser()
    .then(promptTeam)
    .then(teamData => {
-      console.log(teamData);
+      return generatePage(teamData);
+   })
+
+   .then(pageHTML => {
+      return writeFile(pageHTML);
+   })
+   .catch(err => {
+      console.log(err);
+      const teamPage = generatePage(err);
+      writeFile(teamPage);
    });
-   
+
+// module.exports = writeFile;
