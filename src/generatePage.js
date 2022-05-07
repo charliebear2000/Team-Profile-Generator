@@ -3,13 +3,13 @@
 const managerCard = function (manager) {
    return `
    
-   <div class="col s12 m6">
-      <div class="card blue-grey darken-1">
+   <div class="col m4">
+      <div class="card light-blue darken-3">
          <div class="card-header white-text">
             <h3>${manager.name}</h3>
             <h4>Manager</h4>
          </div>
-         <div class="card-content">
+         <div class="card-content light-blue accent-2">
             <p class="id">ID: ${manager.id}</p>
             <p class="email">Email: <a href= "mailto:${manager.email}">${manager.email}</a></p>
             <p class="office">Office Number: ${manager.officeNumber}</p>
@@ -22,15 +22,15 @@ const managerCard = function (manager) {
 const engineerCard = function(engineer) {
    return `
    
-   <div class="col s12 m6">
-      <div class="card blue-grey darken-1">
+   <div class="col m4">
+      <div class="card light-blue darken-3">
          <div class="card-header white-text">
             <h3>${engineer.name}</h3>
             <h4>Engineer</h4>
          </div>
-         <div class="card-content">
+         <div class="card-content light-blue accent-2">
             <p class="id">ID: ${engineer.id}</p>
-            <p class="email">Email: <a href= "mailto:${engineer.email}">${manager.email}</a></p>
+            <p class="email">Email: <a href= "mailto:${engineer.email}">${engineer.email}</a></p>
             <p class="github">GitHub: <a href="https://github.com/${engineer.github}">${engineer.github}</a></p>
          </div>
       </div>
@@ -41,16 +41,16 @@ const engineerCard = function(engineer) {
 const internCard = function (intern) {
    return `
    
-   <div class="col s12 m6">
-      <div class="card blue-grey darken-1">
+   <div class="col m4">
+      <div class="card light-blue darken-3">
          <div class="card-header white-text">
             <h3>${intern.name}</h3>
-            <h4>Manager</h4>
+            <h4>Intern</h4>
          </div>
-         <div class="card-content">
+         <div class="card-content light-blue accent-2">
             <p class="id">ID: ${intern.id}</p>
             <p class="email">Email: <a href= "mailto:${intern.email}">${intern.email}</a></p>
-            <p class="office">Office Number: ${intern.school}</p>
+            <p class="school">School: ${intern.school}</p>
          </div>
       </div>
    </div>
@@ -69,14 +69,15 @@ const teamPage = function (teamInfo) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Team Profile</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet" />
+    <script src="https://kit.fontawesome.com/91a4da6089.js" crossorigin="anonymous"></script>
     <link href="https://fonts.googleapis.com/css?family=Public+Sans:300i,300,500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
    <header>
-      <nav class="nav-wrapper">
-         <span class="brand-logo center">Team Profile</span>
+      <nav class="light-blue darken-4">
+         <span class="brand-logo center">My Team</span>
       </nav>
    </header>
    <main>
@@ -86,6 +87,7 @@ const teamPage = function (teamInfo) {
          </div>
       </div>
    </main>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 </body>
 
 `;}

@@ -1,11 +1,11 @@
-const generatePage = require('./src/generatePage.js');
-
 const Manager = require('./lib/Manager');
 const Engineer = require('./lib/Engineer');
 const Intern = require('./lib/Intern');
 
 const fs = require('fs');
 const inquirer = require('inquirer');
+
+const generatePage = require('./src/generatePage.js');
 
 const teamData = [];
 
@@ -169,14 +169,15 @@ const promptTeam = () => {
 
    .then(employeeInfo => {
 
-      let { name, id, email, role, github, school, addMember } = employeeInfo;
+      let { name, id, email, teamMember, github, school, addMember } = employeeInfo;
       let employee;
 
-      if (role === 'Add Engineer') {
+      if (teamMember === 'Add Engineer') {
          employee = new Engineer (name, id, email, github);
          console.log(employee);
+      } 
 
-      } else {
+      if (teamMember === 'Add Intern') {
          employee = new Intern (name, id, email, school);
          console.log(employee);
       }
@@ -223,5 +224,3 @@ promptUser()
       const teamPage = generatePage(err);
       writeFile(teamPage);
    });
-
-// module.exports = writeFile;
