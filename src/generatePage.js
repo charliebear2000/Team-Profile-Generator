@@ -1,13 +1,12 @@
-
-
+// creates the manager card
 const managerCard = function (manager) {
    return `
    
    <div class="col m4">
       <div class="card light-blue darken-3">
-         <div class="card-header white-text">
-            <h3>${manager.name}</h3>
-            <h4>Manager</h4>
+         <div class="card-header white-text center-align">
+            <h4>${manager.name}</h4>
+            <h5>Manager</h5>
          </div>
          <div class="card-content light-blue accent-2">
             <p class="id">ID: ${manager.id}</p>
@@ -19,14 +18,15 @@ const managerCard = function (manager) {
   `;
 }
 
+// creates the engineer card
 const engineerCard = function(engineer) {
    return `
    
    <div class="col m4">
       <div class="card light-blue darken-3">
-         <div class="card-header white-text">
-            <h3>${engineer.name}</h3>
-            <h4>Engineer</h4>
+         <div class="card-header white-text center-align">
+            <h4>${engineer.name}</h4>
+            <h5>Engineer</h5>
          </div>
          <div class="card-content light-blue accent-2">
             <p class="id">ID: ${engineer.id}</p>
@@ -38,14 +38,15 @@ const engineerCard = function(engineer) {
   `;
 }
 
+// creates the intern card
 const internCard = function (intern) {
    return `
    
    <div class="col m4">
       <div class="card light-blue darken-3">
-         <div class="card-header white-text">
-            <h3>${intern.name}</h3>
-            <h4>Intern</h4>
+         <div class="card-header white-text center-align">
+            <h4>${intern.name}</h4>
+            <h5>Intern</h5>
          </div>
          <div class="card-content light-blue accent-2">
             <p class="id">ID: ${intern.id}</p>
@@ -57,7 +58,7 @@ const internCard = function (intern) {
   `;
 }
 
-
+//  creates the html page
 const teamPage = function (teamInfo) {
 
  return `
@@ -82,17 +83,16 @@ const teamPage = function (teamInfo) {
    </header>
    <main>
       <div class="container">
-         <div class="row justify-content-center" id="team-info">
+         <div class="row justify-content-center">
             ${teamInfo}
          </div>
       </div>
    </main>
    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 </body>
-
 `;}
 
-
+// creates the employee array and pushes the info to the array.
 generatePage = (data) => {
 
    employeeArray = [];
@@ -106,17 +106,19 @@ generatePage = (data) => {
          employeeArray.push(managerInfo);
       }
 
-      else if (role === 'Engineer') {
+      if (role === 'Engineer') {
          const engineerInfo = engineerCard(employee);
          employeeArray.push(engineerInfo);
       }
 
-      else if (role === 'Intern') {
+      if (role === 'Intern') {
          const internInfo = internCard(employee);
          employeeArray.push(internInfo);
       }
-   }
+      
+   } 
 
+   //  joins all the employee info into one array
    const teamInfo = employeeArray.join('')
 
    const generateTeam = teamPage(teamInfo);

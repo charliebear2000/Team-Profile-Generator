@@ -1,14 +1,17 @@
-const Manager = require('./lib/Manager');
-const Engineer = require('./lib/Engineer');
-const Intern = require('./lib/Intern');
-
+// required node packages
 const fs = require('fs');
 const inquirer = require('inquirer');
 
+//  team profiles needed for this file
+const Manager = require('./lib/Manager');
+const Engineer = require('./lib/Engineer');
+const Intern = require('./lib/Intern');
 const generatePage = require('./src/generatePage.js');
 
+//  team array
 const teamData = [];
 
+//  manager prompts
 const promptUser = () => {
    return inquirer.prompt([
       {
@@ -64,8 +67,8 @@ const promptUser = () => {
          }
       }
    ])
-      .then(managerInfo => {
-         const { name, id, email, officeNumber } = managerInfo;
+      .then(({ name, id, email, officeNumber }) => {
+         
          const manager = new Manager(name, id, email, officeNumber);
 
          teamData.push(manager);
@@ -73,21 +76,21 @@ const promptUser = () => {
       })
 };
 
+// engineer and intern prompts
 const promptTeam = () => {
    
    return inquirer.prompt([
+
       {
          type: 'list',
          name: 'teamMember',
          message: 'What would you like to do next?',
-         choices: ['Add Engineer', 'Add Intern', 'Quit Application']
+         choices: ['Add Engineer', 'Add Intern']
       },
-
       {
          type: 'input',
          name: 'name',
          message: "What is the employee's name?",
-         when: (input) => input.teamMember != 'Quit Application',
          validate: nameInput => {
             if (nameInput) {
                return true;
@@ -101,7 +104,6 @@ const promptTeam = () => {
          type: 'input',
          name: 'id',
          message: "What is the employee's ID?",
-         when: (input) => input.teamMember != 'Quit Application',
          validate: idInput => {
             if (idInput) {
                return true;
@@ -115,7 +117,6 @@ const promptTeam = () => {
          type: 'input',
          name: 'email',
          message: "What is the employee's email?",
-         when: (input) => input.teamMember != 'Quit Application',
          validate: emailInput => {
             if (emailInput) {
                return true;
@@ -155,21 +156,14 @@ const promptTeam = () => {
          type: 'confirm',
          name: 'addMember',
          message: 'Do you want to add another team member?',
-         when: (input) => input.teamMember != 'Quit Application',
          default: false
       },
-      {
-         type: 'confirm',
-         name: 'confirmTeam',
-         message: 'Are you sure you want to quit the application?',
-         when: (input) => input.teamMember === 'Quit Application',
-         default: false
-      }
+      
    ])
 
-   .then(employeeInfo => {
+   //  employee data
+   .then(({ name, id, email, teamMember, github, school, addMember})  => {
 
-      let { name, id, email, teamMember, github, school, addMember } = employeeInfo;
       let employee;
 
       if (teamMember === 'Add Engineer') {
@@ -182,6 +176,7 @@ const promptTeam = () => {
          console.log(employee);
       }
 
+      // employee data is added to team array
       teamData.push(employee);
       console.log(teamData);
 
@@ -189,12 +184,13 @@ const promptTeam = () => {
          return promptTeam(teamData);
       } else {
          return teamData;
-      }
+      } 
 
    });
    
 };
 
+// writes the HTML file
 const writeFile = data => {
    
    fs.writeFile('./dist/index.html', data, err => {
@@ -210,6 +206,7 @@ const writeFile = data => {
    });
 };
 
+// functions are run to prompt user and to generate the HTML page
 promptUser()
    .then(promptTeam)
    .then(teamData => {
