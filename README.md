@@ -12,6 +12,8 @@
   ## Description:
   
   This is a Node.js command line application that takes information about employees on a software engineering team and generates an HTML webpage that displays summaries for each person. 
+  
+  
  ![screenshot](https://user-images.githubusercontent.com/99057802/167293740-a0472e13-183e-47a4-86c9-b91910be5f27.png)
  
 
@@ -21,7 +23,8 @@
 
   ## Usage:
   
-![readme-video]
+![Team Profile Video (1)](https://user-images.githubusercontent.com/99057802/167294066-c56ed096-01e6-48fb-bdfc-fe33a369a9a0.gif)
+
 
   ## License:
   MIT License
